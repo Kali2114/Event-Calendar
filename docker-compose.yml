@@ -4,6 +4,8 @@ services:
   app:
     build:
       context: .
+      args:
+        - DEV=true
     restart: always
     volumes:
       - static-data:/app/static
@@ -18,6 +20,9 @@ services:
     user: django-user
     depends_on:
       - db
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
 
   db:
     image: postgres:13-alpine
