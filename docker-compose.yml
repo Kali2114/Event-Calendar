@@ -7,9 +7,12 @@ services:
       args:
         - DEV=true
     restart: always
+    ports:
+      - "8000:8000"
     volumes:
       - static-data:/app/static
       - media-data:/app/media
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
     environment:
       - DB_HOST=db
       - DB_NAME=${DB_NAME}
@@ -20,9 +23,7 @@ services:
     user: django-user
     depends_on:
       - db
-    command: sh -c "python manage.py runserver 0.0.0.0:8000"
-    ports:
-      - "8000:8000"
+
 
   db:
     image: postgres:13-alpine
